@@ -202,6 +202,35 @@ Plots should include:
 - PINN loss history; and
 - finite-difference error against grid spacing on logarithmic axes.
 
+## Baseline results
+
+The reference experiment used 100 finite-difference subintervals and a hard-constrained PINN with two 16-neuron hidden layers, 64 collocation points, 2,000 Adam epochs, a learning rate of $10^{-3}$, and random seed 42. Both numerical methods were evaluated on the same 101-point grid.
+
+| Method | Maximum absolute error | RMSE | Relative $L_2$ error | Boundary error |
+|---|---:|---:|---:|---:|
+| Finite difference | $2.0833\times10^{-6}$ | $1.5139\times10^{-6}$ | $4.9131\times10^{-7}$ | $0$ |
+| PINN | $9.5977\times10^{-5}$ | $4.8832\times10^{-5}$ | $1.5848\times10^{-5}$ | $0$ |
+
+The PINN residual RMSE was $6.8815\times10^{-3}$. The finite-difference refinement study recovered an observed convergence order of approximately 2.0, consistent with the centered second-order stencil.
+
+<table>
+  <tr>
+    <td><img src="docs/figures/solutions_comparison.png" alt="Exact, finite-difference, and PINN solution comparison"></td>
+    <td><img src="docs/figures/absolute_errors.png" alt="Pointwise absolute errors for finite difference and PINN"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/figures/pinn_residual.png" alt="PINN differential-equation residual over the domain"></td>
+    <td><img src="docs/figures/fdm_convergence.png" alt="Second-order finite-difference grid convergence"></td>
+  </tr>
+</table>
+
+<details>
+<summary>PINN training history</summary>
+
+![PINN physics-loss history](docs/figures/pinn_loss.png)
+
+</details>
+
 ## Repository layout
 
 ```text
@@ -209,6 +238,8 @@ Plots should include:
 |-- README.md
 |-- pyproject.toml
 |-- requirements.txt
+|-- docs/
+|   `-- figures/
 |-- src/
 |   |-- __init__.py
 |   |-- config.py
